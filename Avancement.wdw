@@ -1,0 +1,93 @@
+#To edit and compare internal_properties, use WINDEV integrated tools.
+#Internal properties refer to the properties of controls in windows, reports, etc.
+info :
+ name : Avancement
+ major_version : 26
+ minor_version : 0
+ type : 2
+ description : ""
+ subtype : 0
+window :
+ name : Avancement
+ identifier : 0x2158b78a185b5501
+ internal_properties : BgAAAAYAAAA2mLLz2fppY3f6W/dRg++z3yHkJMic/55Z5+JvYPj7srvzwV13wJ5CvDuu18hAWXbzuUTSWjFzsc5aZ4905nyKjBjR5ArW38cSDYmzv8tyaD4XbswcEX5cTV3NamN7iuSlBvYYd8MYCAOJ0OoafdwZ1WzHdPCaWhloPQuE2PrulyoSCXO6weGk1WrBjkyNQK/Ckhzw8H2m2qXHqhZ7Q0cdJw1xZ58ulDaYdYqEL1poBFGdncv9lDydn/Ht2C4ioU7/cgmxHtidXJOEpQPtmqbEMis431TGfnCM5SSiRCVFSpmmNUdmO1nYoQQdGBc08DsdVi+cJIOUUite75/eWBxnxC0llcveb8kcPlVOe+dBNZe/b6HhfdGnFs+sD9kKQ/H7QAgVy+cJl7XDiDo6z4xaTvYagTftPKT2acZZcF0nj8RokWwcFqxIRKaARB6K46KkQ77SqHTQ7dd+AsPCpny/9JIcvt1DxJqbL+xe8snEGJVbnd/bdn/AbFR2mNJfVOKbYI7yjpL/ATSa3EaW4tPBv4BqWXfxMmupk0Fmq1V2bQffG7j6dXPdJQWFxbDADP/0gW00dWHf0DU+JP0D5xs/Plt1nSI1O5GQe0q7Gu7KFg12PuXH9eUmgAEBkpSgKOCi4Td2gXEaBggz8KS5SqmhJWQi/ONnQ26sY//Erp6pzCemVgd3jYYKUR7d4wmS+Z1PWoRE9CHxgo8wNCRb0HDnwHAcdI1EEEz9Ni+9d7jQt4qEPJmVDw12LuII4nNLc6lsqnmKyAEiGKUvkzL8ZgzYynw5rNgx3x220uVexyai0kh/Sz4NECldv4n+xZvI+CJdrSeiDZtqclERfKCCSjuXsRlVnDCs2Qi0CAQs2Y4PvCO/YwujiKLQD70itQ71foAUG0A254W/7MzCMOZNFTkSNsvvJY79V65yFSPQhHTv/R0l
+ controls :
+  -
+    name : LIB_TITRE
+    identifier : 0x2158b7eb1894cccc
+    internal_properties : BgAAAAYAAAAhJ6oPFMWqMz3HrXSWCUS7q1EAYRmJ39vxeS5urldBbLfZX+do9NwL9ef3ZRoy3I2UfkZ6RrJ3pj1dNOCHt1/ldU/vsIA3Ma5yQMXyrxFXIqKost82d9WBUXQH2DRD2DtjSoNWoOMlRWjZjgx7DBFmBqIKMicfxqNPHBQbT94raVjtW2C0fGEFJUjJfkexxN/BApuhKZ0kz7A1NOna0u1LHMyqQkV38JKKhB7yIWApGkgAOD2Yml3mij/VgTcYmJZkEeoWbISRDRXWGv77dqvn68rlgrF/lCRo2bGHWs0OJ9T/XUbf0HstROnZZbTKUlIr9RHgkzVZb7YMAPiZlbz5a92R0eRPYJpBB1+ymXMkNJd2BhHwWGegMtLvla6B89esKVbtNMFOsL+HRRQgHGNxlJefBY3lIRelePJBS4moG1CS9CB1vIEeTD59VVdi3IffrUR9PNQrD6Fl/J4T72DC0Sp3UNg0B8s9imvhNmQUdHVjF9bp6OQPnXQ9TvqQSxnwugXFZYbBeSLOBUoEEOlolTZRVojyMg+Y5OCMFdQzP4rMR6D3+Geu3wB2clg1JcjJawrb8Nx1d3CGddTR7z8cpREs5lZU6Nv7JZOTf5C7uQQzKiRggIaRbMW/VsahHJs7n7CwT7u8Bc1IikMBjdOYRLoVexLaVDk0vh2MNm4JFmTw2jlLYMlpBw==
+    type : 3
+    code_elements :
+     type_code : 2
+     p_codes : []
+  -
+    name : LIB_Fichier
+    identifier : 0x2158b81718dc79b5
+    internal_properties : BgAAAAYAAABBCIfU/wGyvXbE5bxwx/EqOaKK2mJavJ9Fw7qHlkWf4CPw1DdDYBoAYKTAt5URtwCzkKd8z6Yz6/VgQuAzwPCKeUJxsxbB/A79A6tdCBvqzZQFLlpIU2g+1lnhWmbPlTgCWtxz0A09GxFt36fR0R/Ko1flF41NZkpvhIh/w/zZup7+Pze0ych5pQrR7/MrggvrmwUygMI1oUaXfgB+pjZF5hqDMQ5dE8aZBqn3FSl9f1vPCO2CsOYSSGAAR1eSYrbQc+hcPq6kff0z+PanQ0CxoxeewuT6Ze2frf9ys4A3sd9YHAmsv8x2wgBt08cns2JcqZAGD0qcu8n4T8K1O0XZbIpSxj9EBCxd/jI0oGaS6hz0xAKRCG3O1yZfEwzQfvrqZXwFkDRYwiof1NZ88z1I0Z0kYEqHr7tvCQAAMexHB97xygAOuL1eRqNafreGbMuubhPVCC0SQ3uIm0gZCq7kbZBf8aTYq+snKwlz9J9YozYJIW2dcDEITlySGhjXAYmAy46OaBhIupqoZlVxylutVshnUDpwe+AZ1jUIy5EHMa/XT7PAfwRwVBGNJ/Nkrf8RLpm06v6ju679tKarOz+IT1xNmPw2+TCdMKDDgc/hYZypMuiDyLRB4Ty0700+q721UYC32dKtoAe31wp6M/DICJ2OYGSz6FtJPLAzZ3Tb2U2X8h2Oou/Ugu+VndDz
+    type : 3
+    code_elements :
+     type_code : 2
+     p_codes : []
+  -
+    name : Jauge
+    identifier : 0x2158b8711996d88a
+    internal_properties : BgAAAAYAAAAnYW9vsp16Nsi2Ms0d/tcgPsuUHePbztKKeNTtn2pBfPRhBVUUuPMqAKZzm9Q/zy0K3/AYspsjHYI4yW2uOjmUYjxC5NGVyDiHaRgnw/eb5ooS+DoM1hFbzecAr8GHdBnMzDgfTTJwiPjzM6MOd3SOvUxlPsD9g67uNHh1/e9/DnYK/KuG7RQEP4GqNxjj1qVuqGKuQlt0JLPDXImzxcf/cvLqV76cCEASeZUcaaELkCiO2KZAO/17OFlBiYW399RYZlGNHsUD3GDCIF4Vpi7hZO7f/HBsv5zV2RgbDwH0Z7DodfzpULicmnw22OiQGV9J+6x98URNzkVZLxg2UcjudlFpj2oPaDl3jHtmR6qZGbe+DhQGQIQ+J8Pg6w6lKe8vDJ0H/eAXQjRALhw6m1y4ETU2omD3ivuOCWLYGaAiGrb6KhqJqK0yPqojXwM0qKcOwuohWSD9rxILvN89jDyx9/uofQ7IAAdvbNA48M9OrvEoG+Yx8NJXwKhkmvyFGyTj3/Wgk7Fi5C7wDICuZ/JxnubUA2M52L8iHyWyVAlw3Whmk4UAb9jY55PwEKnjcttkEPei9ctqowsbPkrCZSmUYjSIvEbW5whG/kInZstYtcDT3DsI9vp8LuLMXrnej2LauKfRwTtF7gHbvASonTHvhJ8InNrATMT+pirlTUNDJLPhBJs1cz8zKv4IA9DuoEQmkqFE6yAsn69LKMZbEUh2QRu2/OMnnN77XnO8QzsKP3a6YDMVQizkuNAyyNIO0+/9hk/B7in4wuGPmAvilmy8c5lEABx1UgDY3wgEb7CihPeGcNTPdcUlMp0fXS0SBO8w4ZsIHZ/dpp/7T52vPCu6CI6/wCFwe4JFcUQNSAwRlfb5SvOalEarSSROtNFWdF8JxH3N9xQ6LVVhesFKiei2bqo1Pf5VMVp+aSMURSCK3bkbRewJWGAYF3oKAfsw0Fdo30YeRS+C3pOvlH4xHxwmwTCUMVDETMCs+uSM1TKgev3ahX9hs8C2ZqkGjRx60hOuBD0ihASuLwj9yyCZCoSzRQ1zaiYT50JNZwqE7LAbKvh2klgGZOF0/+PcIoMu5cxWBtJAknomFsHvcvHhl+1ipxf65w5fT4ElXLxjT1AlXXdDd4c5RdGk0GRNkU80ze3qP8HU9BOSfrwoFGjZNIeOZKw2BXrZACS+NHi028F8HkNbOjAgjuPcaL2mebjL0PW/WAiNFjSvRQnc1niswp1ncS+DQP/QNU1Cyimh9V5Je14tiGooGJ8jKlw9FkKLnAE0HRaB45HyZg6n6JTmuz6f35KFcol+v8u1wGDB9+smfQkd+2GKyXQpQJyAQwLbbREtk+XXJwdwbcIDgvjw9AfY4UdAo6+x9oB30FBk6IaurVixYqwZA6F2nHxEB85/+eMAsnyvgglK+OQqBBMm1YLR7FS0BvumNIEWeFJrzgAaOnb2RrKbtoAOxxCaqKcERn21029HFErkox8RvwR7Taiaqriw3bKblaDQZsbiINOyoe1fOTTFOjRRsxtxntnPyjEi
+    type : 10
+    code_elements :
+     type_code : 17
+     p_codes :
+      -
+        code : |1+
+         // Version 1
+         // Description 
+         // Jauge linéaire simple horizontale sans libellé
+        type : 14
+ menu :
+  name : _Menu
+  identifier : 0x292573e513b5f221
+  internal_properties : BgAAAAYAAACkk+zu4wdBr0gT/X1rpTeQf/8rMZI24mhZKK1YWYM3VYEAA3PahcEoSas7pSgc68rAIAOqAGqPPgx3MIXDaAyRbl6MUb8aAKzKya6NnECZ9rFqB7FxUjX0c1xtJ+lPnJDRZgaHtiE1fw8Vztn/7Sfub1kMn3vu3rERqpiYoExcy2oUxe2V7jGD2MKl1eZlGSiCWALzhei4YTQDYd2XzBRCoSX+XFQC7+coYuXjXybng6Vo5txB6tCBDQ/uoPfQ
+  options : []
+ languages :
+  - fr-FR
+  - en-US
+ popup_menus : []
+ message_bar :
+  internal_properties : BgAAAAYAAAA67fgqjL+BlNW0l7RVb9QHekfVEUcR8SpB62EFBVueAPYoi1/j/aXUAO/gLLyCTVuQazFai314Ui0SG0rWW0oZm0BFICoRFAhcTeX8
+ code_elements :
+  type_code : 1
+  p_codes :
+   -
+     code : |1-
+      PROCEDURE MaFenêtre(sTitre)
+      LIB_TITRE=stitre
+      LIB_Fichier=""
+      jauge=0
+   -
+     type : 230
+     enabled : false
+  procedures :
+   -
+     name : callback
+     procedure_id : 1249952194632065457
+     type_code : 14
+     code : |1-
+      procédure callback(sFichier,nTaille,nReçu)
+      
+      LIB_Fichier=sFichier
+      si nTaille>0 alors
+      	Jauge = nReçu*100/nTaille 
+      fin
+     type : 458752
+  procedure_templates : []
+  property_templates : []
+ code_parameters :
+  internal_properties : BgAAAAYAAAAwjDLmDSZ0H1P68nJIeNfqR9EvRjU/K+sVcM1T6rhVNr+VTV1mZ/rmoweYbFDZUhBGcv8UsxlDxVCOnb2U/SQOvlGWzNby3/w/V+ppSymxv+Vh
+  original_name : Modele1
+resources :
+ string_res :
+  identifier : 0x1158b77703220838
+  internal_properties : BgAAAAYAAAAa2Zm8J9E/zh+/WIrVvz1fER/So3PB0gjQuxc1xKQVWY4ZDm5lfg==
+custom_note :
+ internal_properties : BgAAAAYAAAC68/W0/adbG0nFCRhrE42B5HRnbDzVHaz86sSQyxlBk7I=
+rad :
+ internal_properties : BgAAAAYAAABoAN7PLpwJW3EiA7WVZdCA5EwrCA1rvutcDHooMWKe

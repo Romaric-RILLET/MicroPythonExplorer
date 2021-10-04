@@ -1,0 +1,821 @@
+#To edit and compare internal_properties, use WINDEV integrated tools.
+#Internal properties refer to the properties of controls in windows, reports, etc.
+info :
+ name : COL_remote
+ major_version : 26
+ minor_version : 0
+ type : 7
+ description : ""
+ subtype : 0
+procedure_set :
+ identifier : 0x1150cafa011e41d5
+ internal_properties : BgAAAAYAAABGLu41kG7fjQV3iS4F72qmnKaNh5694reolNKIW0iw
+ code_elements :
+  internal_properties : BgAAAAYAAADZHzbNX6AWyP+utQH6UrhYjosBy3AJSlHUEBMWOdOf1UpOnVaaRo3fBAezv51rwHx7T3amFMJh4FkeKP4diPGUHZUwg8+ffcYRNdXDnNAX/GmiEcQvYbY=
+  type_code : 31
+  p_codes :
+   -
+     code : |1-
+      gbTraceActive est un booléen
+      gnSerial est un entier
+      
+      STBoardEntry est une structure
+      	sNom est chaine
+      	bRépertoire est un booléen
+      	nTaille est un entier
+      	dhDateModif est une dateheure
+      fin
+      
+      EType est une énumération
+      	eFichier
+      	eRépertoire
+      	eInexistant
+      fin
+      
+      gbRaspberyPico est un booléen = faux
+      gnBufferSize est entier = 32
+      gbHasBuffer est un booléen = faux
+     type : 720896
+  procedures :
+   -
+     name : _lireJusqua
+     internal_properties : BgAAAAYAAAAwCdOVy9aqY9t3T/V7HW9ZuroFS+fxk/YF1t56Gp7RHXLFlDG0ERZsJHMq0R6sasNztM4e77Q=
+     procedure_id : 1247720301955865807
+     type_code : 15
+     code : |1-
+      procédure privée _lireJusqua(ending est une chaine ANSI)
+      
+      data est une chaine ANSI
+      
+      BOUCLE
+      	bufBuf est un buffer= _sLit(1)
+      	data += bufBuf
+      	si ChaîneFinitPar(data,ending) alors
+      		renvoyer data
+      	FIN
+      	si sDansFileEntrée(gnSerial)=0 ALORS
+      		Multitâche(0)
+      	FIN	
+      FIN
+     type : 458752
+   -
+     name : _purgeInput
+     procedure_id : 1247720456574789874
+     type_code : 15
+     code : |1+
+      procédure privée _purgeInput()
+      _sLit(sDansFileEntrée(gnSerial))
+     type : 458752
+   -
+     name : ouvreConnexion
+     procedure_id : 1247720615488616779
+     type_code : 15
+     code : |1+
+      procédure ouvreConnexion(sPort,nBaud)
+      
+      SI gnSerial=0 ALORS
+      	gnSerial = sOuvre(sPort,256,256)
+      	SI gnSerial=0 ALORS
+      		ExceptionDéclenche(1,"Erreur lors de l'ouverture du port série."+rc+ErreurInfo())
+      	FIN
+      	//sFixeParamètre(gnSerial,COMBO_Baud[COMBO_Baud]0,0,8,0,0,0,Vrai)
+      	sFixeParamètre(gnSerial,nBaud,0,8,0,0,0,Vrai)
+      	
+      	gbHasBuffer = _bStdinBuffer()
+      	gbRaspberyPico = (getSysName()="rp2")
+      	
+      	setTime()
+      	
+      	//rpb2 : 128
+      	//usb : 512
+      	//uart: 32
+      	gnBufferSize = gbRaspberyPico ? 128 sinon 512
+      FIN
+     type : 458752
+   -
+     name : fermeConnection
+     procedure_id : 1249235334498670459
+     type_code : 15
+     code : |1+
+      procedure fermeConnection()
+      
+      SI gnSerial=0 ALORS
+      	_sEcrit(Charact(3)+Charact(3)+Charact(4))
+      	sFerme(gnSerial)
+      	gnSerial=0
+      FIN
+     type : 458752
+   -
+     name : _démarreRawREPL
+     procedure_id : 1247721100819969066
+     type_code : 15
+     code : |1+
+      procédure privée _démarreRawREPL()
+      
+      // deux Ctrl+c sort de tout programme
+      _sEcrit(Charact(3)+Charact(3)) // Ctrl+C
+      _purgeInput()
+      
+      _sEcrit(Charact(1)) // Ctrl+A -> raw mode
+      _lireJusqua("raw REPL")
+      _lireJusqua(RC+">")
+      
+      // soft reset
+      _sEcrit(Charact(4)) // Ctrl+D
+      _lireJusqua("soft reboot"+rc)
+      
+      // sortie de boot.py possible
+      
+      _lireJusqua("raw REPL; CTRL-B to exit"+rc+">")
+     type : 458752
+   -
+     name : _annuleRawREPL
+     procedure_id : 1247723454462201230
+     type_code : 15
+     code : |1-
+      procedure privée _annuleRawREPL()
+      
+      _sEcrit(Charact(13)+Charact(2))
+      _lireJusqua(RC+">")
+     type : 458752
+   -
+     name : _envoiCmd
+     procedure_id : 1247722767267339500
+     type_code : 15
+     code : |1-
+      procedure privée _envoiCmd(LOCAL sCmd est une chaine ansi)
+      
+      _sEcrit(sCmd)
+      _sEcrit(Charact(4))
+     type : 458752
+   -
+     name : _getRésultatRawREPL
+     procedure_id : 1247724240441269107
+     type_code : 15
+     code : |1+
+      procédure privée _getRésultatRawREPL() : (buffers,buffers)
+      
+      
+      
+      bufOk est un buffer = _slitTimeout(2,10s)
+      si bufOk<>"OK" ALORS
+      	ExceptionDéclenche(2,"La carte n'a pas répondue OK.")
+      FIN
+      
+      renvoyer _suiteResultat()
+     type : 458752
+   -
+     name : _suiteResultat
+     procedure_id : 1249961342912832423
+     type_code : 15
+     code : |1-
+      procedure prive _suiteResultat() : (Buffers,Buffers)
+      
+      bufOut,bufErr sont des buffers
+      bufOut	= _lireJusqua(Charact(4))
+      bufErr	= _lireJusqua(Charact(4))
+      
+      bufOut	= Gauche(bufOut,Taille(bufOut)-1)
+      bufErr	= Gauche(bufErr,Taille(bufErr)-1)
+      
+      RENVOYER (bufOut,bufErr)
+     type : 458752
+   -
+     name : _prepareLectureResultat
+     procedure_id : 1248840064356617443
+     type_code : 15
+     code : |1+
+      procedure privee _prepareLectureResultat()
+      
+      bufOk est un buffer = _sLitTimeout(2,10s)
+      SI bufOk<>"OK" ALORS
+      	ExceptionDéclenche(3,"La carte n'a pas répondue OK.")
+      FIN
+     type : 458752
+   -
+     name : getPlateformeEtVersion
+     procedure_id : 1247727882573662532
+     type_code : 15
+     code : |1+
+      procedure getPlateformeEtVersion() : (chaine,chaine)
+      
+      _démarreRawREPL()
+      
+      _envoiCmd([
+      import uos
+      print(uos.uname().release)
+      print(uos.uname().machine)
+      ])
+      
+      soit (bufOut) = _getRésultatRawREPL()
+      RENVOYER (ExtraitChaîne(bufOut,1,rc),ExtraitChaîne(bufOut,2,RC))
+     type : 458752
+   -
+     name : getSysName
+     procedure_id : 1250269725860608478
+     type_code : 15
+     code : |1-
+      procedure getSysname() : chaine
+      
+      _démarreRawREPL()
+      
+      _envoiCmd([
+      import uos
+      print(uos.uname().sysname)
+      ])
+      
+      soit (bufOut) = _getRésultatRawREPL()
+      return bufOut
+     type : 458752
+   -
+     name : getListeFichierAvecStat
+     procedure_id : 1247733560520504847
+     type_code : 15
+     code : |1+
+      procedure getListeFichierAvecStat(LOCAL sPath) : tableau de STBoardEntry
+      
+      si sPath="" alors sPath="/"
+      soit sPathSep = sPath+["/"]
+      
+      _démarreRawREPL()
+      
+      _envoiCmd([
+      import uos
+      import ujson
+      print(ujson.dumps([ { 'name': e, 'stat':uos.stat("[%sPathSep%]"+e)} for e in uos.listdir("[%sPath%]") ]))
+      ])
+      
+      soit (bufOut,bufErr) = _getRésultatRawREPL()
+      _TraiteErreur(bufErr)
+      
+      tabEntry est un tableau de STBoardEntry
+      
+      soit j = ChaîneVersJSON(bufOut)
+      POUR TOUT jEntry DE j
+      	stEntry est un STBoardentry
+      	stEntry.sNom = jEntry.name
+      	stEntry.bRépertoire = (jEntry.stat[1]=0x4000)
+      	// la taille n'est pas bonne sur lfs2 et 0 sur fat pour le répertoire
+      	stEntry.nTaille = stEntry.bRépertoire ? 0 sinon jEntry.stat[7]
+      	stEntry.dhDateModif = jEntry.stat[9]=0 ? 0 sinon EpochVersDateHeure(jEntry.stat[9])
+      	tabEntry.Ajoute(stEntry)
+      FIN
+      
+      RENVOYER (tabEntry)
+     type : 458752
+   -
+     name : getListeFichier
+     procedure_id : 1248851905582112644
+     type_code : 15
+     code : |1-
+      PROCÉDURE getListeFichier(LOCAL sPath) : tableau de chaine
+      
+      SI sPath="" ALORS sPath="/"
+      
+      _démarreRawREPL()
+      
+      _envoiCmd([
+      import uos
+      import ujson
+      print(ujson.dumps([ e for e in uos.listdir("[%sPath%]") ]))
+      ])
+      
+      soit (bufOut,bufErr) = _getRésultatRawREPL()
+      _TraiteErreur(bufErr)
+      
+      tabEntry est un tableau de chaine
+      soit j = ChaîneVersJSON(bufOut)
+      POUR TOUT jEntry DE j
+      	tabEntry.Ajoute(jEntry)
+      FIN
+      
+      
+      RENVOYER tabEntry
+     type : 458752
+   -
+     name : getTailleFichier
+     procedure_id : 1248837401476798398
+     type_code : 15
+     code : |1+
+      procedure getTailleFichier(LOCAL board_filename)
+      
+      _démarreRawREPL()
+      
+      _envoiCmd([
+      import uos
+      print(uos.stat('[%board_filename%]')[6])
+      ])
+      
+      soit (bufOut,bufErr) = _getRésultatRawREPL()
+      _TraiteErreur(bufErr)
+      
+      renvoyer val(bufOut)
+     type : 458752
+   -
+     name : _bStdinBuffer
+     internal_properties : BgAAAAYAAACpcfa4DfF+6/iu9f2XZw/eqUfmDUpr4ELT3LBTORV4hiBY9B+w8D/EVxB4MWhBYgmul0SUJypcBXihDMF2wnCUs9zNo2siSIlW06KOfON0Zvh4anRCp8GNBR2YQXfdQOoox0+PTvWhs5VrqQX5CUpq6asoi6oSa+TO0CYWTy1YNQass40tvHW/W6CxXjXOiksIJpPCUYbZunm4cq9uK2iCpx0hhA4VeYN5
+     procedure_id : 1250268278456555604
+     type_code : 15
+     code : |1+
+      procedure privée _bStdinBuffer()
+      
+      _démarreRawREPL()
+      
+      _envoiCmd([
+      import sys
+      try:
+          _ = sys.stdin.buffer
+          return True
+      except:
+          return False
+      ])
+      
+      soit (bufOut,_) = _getRésultatRawREPL()
+      
+      RENVOYER bufOut="True"
+     type : 458752
+   -
+     name : setTime
+     procedure_id : 1250276584923405154
+     type_code : 15
+     code : |1-
+      procedure setTime()
+      
+      _démarreRawREPL()
+      
+      d est une dateheure
+      soit year = d.Année
+      soit month = d.mois
+      soit day = d.Jour
+      soit weekday = DateVersJourDeLaSemaine(d)-1
+      soit hour = d.mois
+      soit minute = d.mois
+      soit second = d.mois
+      soit millisecond = d.mois
+      
+      _envoiCmd([
+      import machine
+      rtc = machine.RTC()
+      try:
+          rtc.datetime(([%year%], [%month%], [%day%], [%weekday%], [%hour%], [%minute%], [%second%], [%millisecond%]))
+      except:
+          # old version (pre 1.17)
+          rtc.init(([%year%], [%month%], [%day%], [%hour%], [%minute%], [%second%], [%millisecond*1000%]))
+      ])
+      
+      soit (,_bufErr) = _getRésultatRawREPL()
+      renvoyer _bufErr=""
+     type : 458752
+   -
+     name : _TraiteErreur
+     procedure_id : 1249210943373586216
+     type_code : 15
+     code : |1-
+      procedure privee _TraiteErreur(LOCAL bufErr)
+      
+      soit nPosErreur = Position(bufErr,"OSError")
+      SI nPosErreur>0  ALORS
+      	ExceptionDéclenche(4,"La carte a rencontré une erreur."+RC+bufErr[[nPosErreur À]])
+      FIN
+      nPosErreur = Position(bufErr,"Error")
+      SI nPosErreur>0  ALORS
+      	ExceptionDéclenche(5,"La carte a rencontré une erreur."+RC+bufErr[[nPosErreur À]])
+      FIN
+     type : 458752
+   -
+     name : eGetType
+     procedure_id : 1248851282811709630
+     type_code : 15
+     code : |1+
+      procedure eGetType(LOCAL board_filename) : EType
+      
+      _démarreRawREPL()
+      
+      _envoiCmd([
+      import uos
+      print(uos.stat('[%board_filename%]')[0])
+      ])
+      
+      soit (bufOut,bufErr) = _getRésultatRawREPL()
+      si Contient(bufErr,"ENOENT",MotComplet) ALORS
+      	renvoyer eInexistant
+      FIN
+      _TraiteErreur(bufErr)
+      
+      SI val(bufOut)=0x4000 ALORS RENVOYER eRépertoire
+      RENVOYER eFichier
+     type : 458752
+   -
+     name : CréerRépertoire
+     procedure_id : 1249239139843005188
+     type_code : 15
+     code : |1+
+      procedure CréerRépertoire(LOCAL nom_répertoire)
+      
+      _démarreRawREPL()
+      
+      _envoiCmd([
+      import uos
+      uos.mkdir('[%nom_répertoire%]')
+      ])
+      
+      soit (,bufErr) = _getRésultatRawREPL()
+      _TraiteErreur(bufErr)
+     type : 458752
+   -
+     name : SupprimerRépertoire
+     procedure_id : 1249592151803658878
+     type_code : 15
+     code : |1+
+      procédure SupprimerRépertoire(nom_répertoire)
+      
+      soit tabFils = getListeFichier(nom_répertoire)
+      POUR TOUT sFils DE tabFils
+      	SupprimeElement(nom_répertoire+["/"]+sFils)
+      FIN
+      	
+      
+      _démarreRawREPL()
+      
+      _envoiCmd([
+      import uos
+      uos.rmdir('[%nom_répertoire%]')
+      ])
+      
+      soit (,bufErr) = _getRésultatRawREPL()
+      _TraiteErreur(bufErr)
+     type : 458752
+   -
+     name : SupprimerFichier
+     procedure_id : 1249592310717485486
+     type_code : 15
+     code : |1+
+      PROCÉDURE SupprimerFichier(LOCAL nom_fichier)
+      
+      _démarreRawREPL()
+      
+      _envoiCmd([
+      import uos
+      uos.remove('[%nom_fichier%]')
+      ])
+      
+      soit (,bufErr) = _getRésultatRawREPL()
+      _TraiteErreur(bufErr)
+     type : 458752
+   -
+     name : SupprimeElement
+     procedure_id : 1249592847588522924
+     type_code : 15
+     code : |1+
+      procedure SupprimeElement(LOCAL nom)
+      
+      selon egettype(nom)
+      	CAS eFichier
+      		SupprimerFichier(nom)
+      	CAS eRépertoire
+      		SupprimerRépertoire(nom)
+      FIN
+     type : 458752
+   -
+     name : getFichierDepuisBoard
+     procedure_id : 1248831740709895646
+     type_code : 15
+     code : |1-
+      procedure getFichierDepuisBoard(LOCAL board_filename, LOCAL local_filename, pCallback est une procédure)
+      
+      soit nTailleFichier = getTailleFichier(board_filename)
+      
+      si pCallback<>null alors pCallback(board_filename,nTailleFichier,0)
+      
+      si gbTraceActive alors trace("Réception du fichier [%board_filename%] de [%nTailleFichier%] octets")
+      soit nFichier = fCrée(local_filename)
+      SI nFichier=-1 ALORS 
+      	ExceptionDéclenche(6,"Impossible de créer le fichier <[%local_filename%]>."+RC+ErreurInfo())
+      FIN
+      
+      _démarreRawREPL()
+      
+      si gbHasBuffer ALORS
+      	_envoiCmd([
+      import sys
+      import uos
+      import ubinascii
+      with open('[%board_filename%]', 'rb') as src_file:
+          bytes_remaining = [%nTailleFichier%]
+          buf_size = [%gnBufferSize%]
+          while bytes_remaining > 0:
+              read_size = min(bytes_remaining, buf_size)
+              buf = src_file.read(read_size)
+              sys.stdout.buffer.write(buf)
+              bytes_remaining -= read_size
+              # Wait for an ack so we don't get ahead of the remote
+              while True:
+                  char = sys.stdin.read(1)
+                  if char:
+                      if char == '\x06':
+                          break
+      	])
+      sinon
+      	_envoiCmd([
+      import sys
+      import uos
+      import ubinascii
+      with open('[%board_filename%]', 'rb') as src_file:
+          bytes_remaining = [%nTailleFichier%]
+          buf_size = [%gnBufferSize/2%]
+          while bytes_remaining > 0:
+              read_size = min(bytes_remaining, buf_size)
+              buf = src_file.read(read_size)
+              sys.stdout.write(ubinascii.hexlify(buf))
+              bytes_remaining -= read_size
+              # Wait for an ack so we don't get ahead of the remote
+              while True:
+                  char = sys.stdin.read(1)
+                  if char:
+                      if char == '\x06':
+                          break
+      	])
+      FIN
+      
+      
+      _prepareLectureResultat() 
+      
+      nAncienneValeurCallback est entier = 0
+      nPasCallback est entier = nTailleFichier/100
+      
+      soit nTailleRestante = nTailleFichier
+      si gbHasBuffer=faux alors 
+      	nTailleRestante = nTailleRestante * 2 //*2 pour hex
+      FIN
+      tantque nTailleRestante>0
+      	soit nTailleLire = min(nTailleRestante, gnBUFFERSIZE)
+      	soit bufBoard = _sLitTimeout(nTailleLire,2s)
+      	soit bufBuf = gbHasBuffer ? bufBoard sinon HexaVersBuffer(bufBoard)
+      	fEcrit(nFichier,bufBuf)
+      	nTailleRestante -= nTailleLire
+      	// ACK
+      	_sEcrit(caract(6))
+      	
+      	nNouvelleValeurCallback est entier = gbHasBuffer ? nTailleFichier-nTailleRestante SINON nTailleFichier-nTailleRestante/2
+      	si pCallback<>null _et_ nNouvelleValeurCallback-nAncienneValeurCallback>nPasCallback ALORS
+      		pCallback(board_filename,nTailleFichier, nNouvelleValeurCallback)
+      		nAncienneValeurCallback=nNouvelleValeurCallback
+      	FIN
+      	
+      FIN
+      
+      pCallback(board_filename,nTailleFichier,nTailleFichier)
+      
+      FIN:
+      	fFerme(nFichier)
+      	
+      	
+     type : 458752
+   -
+     name : EnvoiFichierVersBoard
+     procedure_id : 1249597146853883981
+     type_code : 15
+     code : |1+
+      PROCÉDURE EnvoiFichierVersBoard(LOCAL local_filename, LOCAL board_filename, pCallback est un procedure)
+      
+      soit nTailleFichier = fTaille(local_filename)
+      
+      SI pCallback<>Null ALORS pCallback(local_filename,nTailleFichier,0)
+      
+      soit nFichier = fOuvre(local_filename)
+      SI nFichier=-1 ALORS 
+      	ExceptionDéclenche(7,"Impossible d'ouvrir le fichier <[%local_filename%]>."+RC+ErreurInfo())
+      FIN
+      
+      soit sSleepRP2 = gbRaspberyPico ? "time.sleep_ms(20)" sinon ""
+      
+      _démarreRawREPL()
+      
+      si gbHasBuffer ALORS
+      	_envoiCmd([
+      import sys
+      import uos
+      import ubinascii
+      import time
+      with open('[%board_filename%]', 'wb') as dst_file:
+          bytes_remaining = [%nTailleFichier%]
+          buf_size = [%gnBufferSize%]
+          write_buf = bytearray(buf_size)
+          read_buf = bytearray(buf_size)
+          while bytes_remaining > 0:
+              # Send back an ack as a form of flow control
+              sys.stdout.write('\x06')
+              read_size = min(bytes_remaining, buf_size)
+              buf_remaining = read_size
+              buf_index = 0
+              while buf_remaining > 0:
+                  bytes_read = sys.stdin.buffer.readinto(read_buf, read_size)
+                  # The following sleep is required for the RPi Pico
+                  [%sSleepRP2%]
+                  if bytes_read > 0:
+                      write_buf[buf_index:bytes_read] = read_buf[0:bytes_read]
+                      buf_index += bytes_read
+                      buf_remaining -= bytes_read
+              dst_file.write(write_buf[0:read_size])
+              bytes_remaining -= read_size
+          if hasattr(os, 'sync'):
+              os.sync()
+      	])
+      sinon
+      	_envoiCmd([
+      import sys
+      import uos
+      import ubinascii
+      import time
+      with open('[%board_filename%]', 'wb') as dst_file:
+          bytes_remaining = [%nTailleFichier*2%]
+          buf_size = [%gnBufferSize%]
+          write_buf = bytearray(buf_size)
+          read_buf = bytearray(buf_size)
+          while bytes_remaining > 0:
+              # Send back an ack as a form of flow control
+              sys.stdout.write('\x06')
+              read_size = min(bytes_remaining, buf_size)
+              buf_remaining = read_size
+              buf_index = 0
+              while buf_remaining > 0:
+                  bytes_read = sys.stdin.readinto(read_buf, read_size)
+                  # The following sleep is required for the RPi Pico
+                  [%sSleepRP2%]
+                  if bytes_read > 0:
+                      write_buf[buf_index:bytes_read] = read_buf[0:bytes_read]
+                      buf_index += bytes_read
+                      buf_remaining -= bytes_read
+              dst_file.write(ubinascii.unhexlify(write_buf[0:read_size]))        
+              bytes_remaining -= read_size
+          if hasattr(os, 'sync'):
+                  os.sync()
+      	])
+      FIN
+      
+      _prepareLectureResultat() 
+      
+      nAncienneValeurCallback	est entier	= 0
+      nPasCallback			est entier	= nTailleFichier/100
+      
+      soit nTailleRestante = nTailleFichier
+      TANTQUE nTailleRestante>0
+      	soit nTailleLire = min(nTailleRestante, gbHasBuffer ? gnBUFFERSIZE sinon gnBUFFERSIZE/2)
+      	soit bufFile = fLit(nFichier,nTailleLire)
+      	soit bufEnvoi = gbHasBuffer ? bufFile sinon BufferVersHexa(bufFile,SansRegroupement,SansLigne)
+      	_secrit(bufEnvoi)
+      	nTailleRestante -= nTailleLire
+      	// ACK
+      	soit ack = _sLitTimeout(1,2s)
+      	si ack<>caract(6) ALORS
+      		si ack=caract(4) ALORS
+      			soit  sErreur = _lireJusqua(Caract(4))
+      			sErreur = gauche(sErreur,taille(sErreur)-1)
+      			_TraiteErreur(sErreur)
+      		FIN
+      		ExceptionDéclenche(10,"ACK non reçu pendant l'envoi")
+      	FIN
+      	
+      	nNouvelleValeurCallback est entier = gbHasBuffer ? nTailleFichier-nTailleRestante SINON nTailleFichier-nTailleRestante/2
+      	SI pCallback<>Null _ET_ nNouvelleValeurCallback-nAncienneValeurCallback>nPasCallback ALORS
+      		pCallback(board_filename,nTailleFichier, nNouvelleValeurCallback)
+      		nAncienneValeurCallback=nNouvelleValeurCallback
+      	FIN
+      FIN
+      
+      pCallback(board_filename,nTailleFichier,nTailleFichier)
+      
+      _suiteResultat()
+      
+      FIN:
+      	fFerme(nFichier)
+     type : 458752
+   -
+     name : getDepuisBoard
+     procedure_id : 1248841524645641709
+     type_code : 15
+     code : |1+
+      procedure getDepuisBoard(LOCAL répertoire_board,LOCAL element_board,LOCAL répertoire_local, pCallback est une procédure)
+      
+      soit sRépertoire_element_board = répertoire_board+["/"]+element_board
+      
+      selon egettype(sRépertoire_element_board)
+      	CAS eFichier
+      		getFichierDepuisBoard(sRépertoire_element_board,répertoire_local+fSep+element_board, pCallback)
+      	CAS eRépertoire
+      		soit tabFichier = getListeFichier(sRépertoire_element_board) 
+      		soit sous_répertoire_local = répertoire_local+fSep+element_board
+      		SI fRépertoireExiste(sous_répertoire_local)=Faux ALORS fRepCrée(sous_répertoire_local)
+      		POUR TOUT sFichier DE tabFichier
+      			getDepuisBoard(sRépertoire_element_board,sFichier,sous_répertoire_local, pCallback)
+      		FIN		
+      FIN
+     type : 458752
+   -
+     name : EnvoiVersBoard
+     procedure_id : 1249594784621845375
+     type_code : 15
+     code : |1+
+      procedure EnvoiVersBoard(LOCAL répertoire_local,LOCAL element_local,LOCAL répertoire_board, pCallback est une procédure)
+      
+      soit sRépertoire_element_local = répertoire_local+[fsep]+element_local
+      
+      SI fRépertoireExiste(sRépertoire_element_local) ALORS
+      	soit sous_répertoire_board = répertoire_board+["/"]+element_local
+      	SI eGetType(sous_répertoire_board)=eInexistant ALORS CréerRépertoire(sous_répertoire_board)
+      	
+      	soit sListeRépertoire = fListeRépertoire(sRépertoire_element_local+[fSep],frNonRécursif)
+      	POUR TOUT CHAÎNE sRépertoire DE sListeRépertoire SÉPARÉE PAR RC
+      		EnvoiVersBoard(sRépertoire_element_local, sRépertoire[[taille(sRépertoire_element_local+[fsep])+1 a]], sous_répertoire_board, pCallback)
+      	FIN
+      	
+      	soit sListeFichier =fListeFichier(sRépertoire_element_local+[fSep]+"*.*",frNonRécursif)
+      	POUR TOUT CHAÎNE sFichier DE sListeFichier SÉPARÉE PAR RC
+      		EnvoiFichierVersBoard(sFichier,sous_répertoire_board+["/"]+fExtraitChemin(sFichier,fFichier+fExtension), pCallback)
+      	FIN
+      SINON
+      	EnvoiFichierVersBoard(sRépertoire_element_local,répertoire_board+["/"]+element_local, pCallback)
+      FIN
+     type : 458752
+   -
+     name : _sLit
+     internal_properties : BgAAAAYAAAAeZoVufiQs/zwu2SG91tDoJAWWyYjYza5j6/NjSfP/GfBA9Vm8nEP+wDj6y4gOxeMm9+lE/7do19lz
+     procedure_id : 1249212068656852991
+     type_code : 15
+     code : |1+
+      procedure privée _sLit(LOCAL nTaille) 
+      
+      soit bufLu = WL.sLit(gnSerial,nTaille)
+      si gbTraceActive _et_ taille(bufLu)>0 alors trace("Lecture:<"+_printableBuffer(bufLu)+">")
+      renvoyer bufLu
+     type : 458752
+   -
+     name : _sLitTimeout
+     procedure_id : 1249939421387702276
+     type_code : 15
+     code : |1-
+      procedure prive _sLitTimeout(LOCAL nTaille,LOCAL timeout) : buffer
+      
+      ChronoDébut()
+      
+      bufData est un buffer
+      tantque nTaille>0
+      	soit nALire = min(sDansFileEntrée(gnSerial),nTaille)
+      	si nALire>0 ALORS		
+      		bufLu est un buffer = _sLit(nTaille)
+      		bufData += bufLu;
+      		nTaille -= Taille(bufLu)
+      	sinon
+      		MultitâcheRepeint()
+      	FIN
+      	si ChronoValeur()>timeout _et_ nTaille>0 ALORS
+      		ExceptionDéclenche(8,"Timeout dépasser pendant la lecture de la réponse de la carte.")
+      	FIN
+      FIN
+      
+      renvoyer bufData
+     type : 458752
+   -
+     name : _sEcrit
+     internal_properties : BgAAAAYAAAAeZoVufiQs/zwu2SG91tDoJAWWyYjYza5j6/NjSfP/GfBA9Vm8nEP+wDj6y4gOxeMm9+lE/7do19lz
+     procedure_id : 1249213348559043615
+     type_code : 15
+     code : |1+
+      procédure privée _sEcrit(bufEcrit)
+      
+      soit nEcrit = wL.secrit(gnSerial,bufEcrit)
+      SI gbTraceActive alors Trace("Ecrit [%nEcrit%] octets:<"+_printableBuffer(bufEcrit)+">")
+      
+      renvoyer nEcrit
+     type : 458752
+   -
+     name : _printableBuffer
+     procedure_id : 1249214460955766555
+     type_code : 15
+     code : |1-
+      procedure prive _printableBuffer(LOCAL sData)
+      
+      sChaine est une chaîne
+      pour i=1 _a_ taille(sData)
+      	soit c = asc(sData[[i]])
+      	si c=0x20 _ou_ c=10 _ou_ c=13 _ou_ 0x21<=c _et_ c<=0x7E ALORS
+      		sChaine += sData[[i]]
+      	sinon
+      		sChaine += "\x"+NumériqueVersChaine(c, "02X")
+      		
+      	FIN	
+      FIN
+      
+      renvoyer sChaine
+     type : 458752
+  procedure_templates : []
+  property_templates : []
+ code_parameters :
+  internal_properties : BgAAAAYAAAA6ih3UbgNXHwTtiPSFUEj+2fi/m7v4QV2rqidAupM=
+  original_name : COL_SansNom1
+resources :
+ string_res :
+  identifier : 0x1150caed011c0ebf
+  internal_properties : BgAAAAYAAAAnMYFQ1bL/vz9ehh7L22SNNSlIzGTOI8h5F/WtgDNP
+custom_note :
+ internal_properties : BgAAAAYAAABtB9HWVzrXO2+4NDRVK0vmzaNKrCKqH1DBX30lMmGZ
