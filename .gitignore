@@ -25,3 +25,5 @@ HstDuree.log
 # WINDEV Mobile 
 android
 *.xcode.gen
+Exe
+/Install_Exécutable Windows 64 bits
