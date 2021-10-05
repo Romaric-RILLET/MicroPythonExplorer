@@ -799,7 +799,7 @@ window :
         type : 14
       -
         code : |1-
-         Reset()
+         ResetBoard()
          fermeLaConnection()
         type : 18
       -

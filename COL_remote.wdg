@@ -312,11 +312,11 @@ procedure_set :
       renvoyer val(bufOut)
      type : 458752
    -
-     name : Reset
+     name : ResetBoard
      procedure_id : 1251070698550616630
      type_code : 15
-     code : |1-
-      procedure Reset()
+     code : |1+
+      procedure ResetBoard()
       
       _démarreRawREPL()
       
@@ -324,9 +324,6 @@ procedure_set :
       import machine
       machine.reset()
       ])
-      
-      soit (,bufErr) = _getRésultatRawREPL()
-      _TraiteErreur(bufErr)
      type : 458752
    -
      name : _bStdinBuffer
