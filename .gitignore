@@ -27,3 +27,6 @@ android
 *.xcode.gen
 Exe
 /Install_Exécutable Windows 64 bits
+
+Folder.ico
+desktop.ini

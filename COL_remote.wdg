@@ -312,6 +312,23 @@ procedure_set :
       renvoyer val(bufOut)
      type : 458752
    -
+     name : Reset
+     procedure_id : 1251070698550616630
+     type_code : 15
+     code : |1-
+      procedure Reset()
+      
+      _démarreRawREPL()
+      
+      _envoiCmd([
+      import machine
+      machine.reset()
+      ])
+      
+      soit (,bufErr) = _getRésultatRawREPL()
+      _TraiteErreur(bufErr)
+     type : 458752
+   -
      name : _bStdinBuffer
      internal_properties : BgAAAAYAAACpcfa4DfF+6/iu9f2XZw/eqUfmDUpr4ELT3LBTORV4hiBY9B+w8D/EVxB4MWhBYgmul0SUJypcBXihDMF2wnCUs9zNo2siSIlW06KOfON0Zvh4anRCp8GNBR2YQXfdQOoox0+PTvWhs5VrqQX5CUpq6asoi6oSa+TO0CYWTy1YNQass40tvHW/W6CxXjXOiksIJpPCUYbZunm4cq9uK2iCpx0hhA4VeYN5
      procedure_id : 1250268278456555604
@@ -739,7 +756,6 @@ procedure_set :
      type : 458752
    -
      name : _sLit
-     internal_properties : BgAAAAYAAAAeZoVufiQs/zwu2SG91tDoJAWWyYjYza5j6/NjSfP/GfBA9Vm8nEP+wDj6y4gOxeMm9+lE/7do19lz
      procedure_id : 1249212068656852991
      type_code : 15
      code : |1+
@@ -777,7 +793,6 @@ procedure_set :
      type : 458752
    -
      name : _sEcrit
-     internal_properties : BgAAAAYAAAAeZoVufiQs/zwu2SG91tDoJAWWyYjYza5j6/NjSfP/GfBA9Vm8nEP+wDj6y4gOxeMm9+lE/7do19lz
      procedure_id : 1249213348559043615
      type_code : 15
      code : |1+
