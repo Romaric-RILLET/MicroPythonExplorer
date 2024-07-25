@@ -2,16 +2,16 @@
 #Internal properties refer to the properties of controls in windows, reports, etc.
 info :
  name : COL_remote
- major_version : 26
+ major_version : 29
  minor_version : 0
  type : 7
  description : ""
  subtype : 0
 procedure_set :
  identifier : 0x1150cafa011e41d5
- internal_properties : BgAAAAYAAABGLu41kG7fjQV3iS4F72qmnKaNh5694reolNKIW0iw
+ internal_properties : CQAAAAkAAABGLu41kG7fjQV3iS4F72qmnKaNh5694reolNKIW0iw
  code_elements :
-  internal_properties : BgAAAAYAAADZHzbNX6AWyP+utQH6UrhYjosBy3AJSlHUEBMWOdOf1UpOnVaaRo3fBAezv51rwHx7T3amFMJh4FkeKP4diPGUHZUwg8+ffcYRNdXDnNAX/GmiEcQvYbY=
+  internal_properties : CQAAAAkAAACBkt5wayg+Yvfu2coGhEvNCeOfhOjPw1L1YuV+Miast4XRg3DBong2i9DZ17V7T2/dkLtIN29VEX3RHEyw9t1uJAkOPdTqXyEG6Un+y2ugD/dZncabaJwRjLPUvK5l41k7C3Jso9wZ
   type_code : 31
   p_codes :
    -
@@ -39,7 +39,7 @@ procedure_set :
   procedures :
    -
      name : _lireJusqua
-     internal_properties : BgAAAAYAAAAwCdOVy9aqY9t3T/V7HW9ZuroFS+fxk/YF1t56Gp7RHXLFlDG0ERZsJHMq0R6sasNztM4e77Q=
+     internal_properties : CQAAAAkAAADYCZU8DMziZJ84HwTJB91MS5gfBKGmNYMtgUbGN2a24HvlvECrZpuj0oSTxLdhXsEovxk0C6bz+MkxjtAPiDzwc2ksFh+0
      procedure_id : 1247720301955865807
      type_code : 15
      code : |1-
@@ -327,7 +327,7 @@ procedure_set :
      type : 458752
    -
      name : _bStdinBuffer
-     internal_properties : BgAAAAYAAACpcfa4DfF+6/iu9f2XZw/eqUfmDUpr4ELT3LBTORV4hiBY9B+w8D/EVxB4MWhBYgmul0SUJypcBXihDMF2wnCUs9zNo2siSIlW06KOfON0Zvh4anRCp8GNBR2YQXfdQOoox0+PTvWhs5VrqQX5CUpq6asoi6oSa+TO0CYWTy1YNQass40tvHW/W6CxXjXOiksIJpPCUYbZunm4cq9uK2iCpx0hhA4VeYN5
+     internal_properties : CQAAAAkAAADge6jQWAH5ooSJsxHxWTtEKECArf/ghHELs3brXbgdZMxlRTlDrGEr/ZtEh0cj1+pAKyzGHFYMl3DS81R/3JvUJNTypbJmwCgh433qzQJAiSqzoWVNDhdvn6+YdZn0Pq+yeoK7MK4wPNXnOBzIv3kX43ZAAp3F/QpReWOMg80ZNv5I5d5c2ABHfae+PsoOTksfSVOcB4wq1yvu76dgidMsCpE8R8O6+Q==
      procedure_id : 1250268278456555604
      type_code : 15
      code : |1+
@@ -823,11 +823,11 @@ procedure_set :
   procedure_templates : []
   property_templates : []
  code_parameters :
-  internal_properties : BgAAAAYAAAA6ih3UbgNXHwTtiPSFUEj+2fi/m7v4QV2rqidAupM=
+  internal_properties : CQAAAAkAAACVGQgYbalU7DKC3oH4ItDrjtcTHXXV/EuH8q0IbhyQlw==
   original_name : COL_SansNom1
 resources :
  string_res :
   identifier : 0x1150caed011c0ebf
-  internal_properties : BgAAAAYAAAAnMYFQ1bL/vz9ehh7L22SNNSlIzGTOI8h5F/WtgDNP
+  internal_properties : CQAAAAkAAACm76HWfKGWp33VjXInA4cRlqArlgTTA862QGt72W2ld5Y=
 custom_note :
- internal_properties : BgAAAAYAAABtB9HWVzrXO2+4NDRVK0vmzaNKrCKqH1DBX30lMmGZ
+ internal_properties : CQAAAAkAAABtB9HWVzrXO2+4NDRVK0vmzaNKrCKqH1DBX30lMmGZ
